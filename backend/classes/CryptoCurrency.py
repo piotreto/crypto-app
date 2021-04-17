@@ -1,6 +1,8 @@
 import requests
-import . from ErrorMessages
+from classes.ErrorMessages import *
 from datetime import date
+import numpy as np
+import time
 
 class CryptoCurrency:
 
@@ -15,7 +17,7 @@ class CryptoCurrency:
     #Same thing with interval, only daily as a parameter is accetable
     def get_prices(self, vs_currency, days, interval=None):
 
-        if days < 0:
+        if int(days) < 0:
             return ErrorMessages.get_days_error()
             
         
@@ -32,17 +34,30 @@ class CryptoCurrency:
 
         if "error" in data:
             return ErrorMessages.handle_CoinGecko_error(data)
-       
+
+        #CoinGecko API give us 1 price element more everytime, so we are getting rid of it
+        data['prices'].pop(0)
+
+        # for tup in data['prices']:
+        #     print(time.strftime('%Y-%m-%d', time.gmtime(float(tup[0]) / 1e3)))
+
+        avg = self.get_MA(data)
+        times = [time.strftime('%Y-%m-%d %H:%M', time.gmtime(float(tup[0]) / 1e3)) for tup in data['prices']]
+        data['prices'] = list(map(lambda x: x[1], data['prices']))
         result = {
             "prices": data['prices'],
+            "time": times,
             "interval": interval,
-            "vs_currency": vs_currencyError,
-            "days": days
+            "vs_currency": vs_currency,
+            "days": days,
+            "SMA_3": avg['SMA_3'],
+            "SMA_4": avg['SMA_4'],
         }
         
         return result
 
     def get_interval(self, days):
+        days = int(days)
         if days <= 1:
             return "minutely"
         elif days > 1 and days <= 90:
@@ -56,6 +71,7 @@ class CryptoCurrency:
 
         if "error" in data:
             return ErrorMessages.handle_CoinGecko_error(data)
+        
         
         result = {
             "id": data['id'],
@@ -82,7 +98,19 @@ class CryptoCurrency:
         }
 
         return result
-        
-    def get_macd(self):
+    
+    def get_MA(self, data):
+        n = len(data['prices'])
+        SMA_3 = [None for _ in range(n)]
+        SMA_4 = [None for _ in range(n)]
+
+        for i in range(n-2):
+            SMA_3[i + 2] = np.round(((data['prices'][i][1] + data['prices'][i+1][1] + data['prices'][i+2][1])/3),1)
+        for i in range(n-3):
+            SMA_4[i + 3] = np.round(((data['prices'][i][1] + data['prices'][i+1][1] + data['prices'][i+2][1] + data['prices'][i+3][1])/4),1)
+
+        return {'SMA_3' : SMA_3,
+                'SMA_4' : SMA_4}
+
 
     

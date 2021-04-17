@@ -25,26 +25,26 @@ class ErrorMessages:
         elif data['error'] == "invalid vs_currency":
             return ErrorMessages.get_vs_currency_error()
         else:
-            returun data['error']
+            return data['error']
 
             
 
     @staticmethod
     def get_method_error():
-        return errorMessages['methodError']
+        return ErrorMessages.errorMessages['methodError']
     
     @staticmethod
     def get_crypto_id_error():
-        return errorMessages['cryptoIdError']
+        return ErrorMessages.errorMessages['cryptoIdError']
 
     @staticmethod
     def get_vs_currency_error():
-        return errorMessages['vs_currencyError']
+        return ErrorMessages.errorMessages['vs_currencyError']
 
     @staticmethod
     def get_days_error():
-        return ErrorMessages['daysError']
+        return ErrorMessages.errorMessages['daysError']
     
     @staticmethod
     def get_interval_error():
-        return ErrorMessages['intervalError']
+        return ErrorMessages.errorMessages['intervalError']
