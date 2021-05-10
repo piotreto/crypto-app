@@ -15,6 +15,18 @@ class ErrorMessages:
         },
         "intervalError": {
             "error": "Wrong type of interval"
+        },
+        "duplicateEmailError": {
+            "error": "Email already exists"
+        },
+        "emailError": {
+            "error": "Invalid email"
+        },
+        "passwordError": {
+            "error": "Invalid password"
+        },
+        "jwtError": {
+            "error": "JWT is not valid"
         }
     }
 
@@ -48,3 +60,19 @@ class ErrorMessages:
     @staticmethod
     def get_interval_error():
         return ErrorMessages.errorMessages['intervalError']
+    
+    @staticmethod
+    def get_email_error():
+        return ErrorMessages().errorMessages['emailError']
+    
+    @staticmethod
+    def get_duplicate_email_error():
+        return ErrorMessages().errorMessages['duplicateEmailError']
+    
+    @staticmethod
+    def get_password_error():
+        return ErrorMessages().errorMessages["passwordError"]
+
+    @staticmethod
+    def get_jwt_error():
+        return ErrorMessages().errorMessages["jwtError"]
