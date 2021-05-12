@@ -56,6 +56,16 @@ class CryptoCurrency:
         
         return result
 
+    def get_single_value(self):
+        url = 'https://api.coingecko.com/api/v3/simple/price?ids=' + self.id + '&vs_currencies=usd'
+        data = requests.get(url).json()
+
+        if "error" in data:
+            return ErrorMessages.handle_CoinGecko_error(data)
+
+        return float(data[self.id]['usd'])
+        
+
     def get_interval(self, days):
         days = int(days)
         if days <= 1:

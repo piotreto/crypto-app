@@ -27,7 +27,13 @@ class ErrorMessages:
         },
         "jwtError": {
             "error": "JWT is not valid"
-        }
+        }, 
+        "moneyError": {
+            "error": "Not enough currency!"
+        },
+        "negativeError":{
+            "error": "Negative value is forbidden!"
+        } 
     }
 
     @staticmethod
@@ -76,3 +82,15 @@ class ErrorMessages:
     @staticmethod
     def get_jwt_error():
         return ErrorMessages().errorMessages["jwtError"]
+
+    @staticmethod
+    def get_jwt_error():
+        return ErrorMessages().errorMessages["jwtError"]
+
+    @staticmethod
+    def get_money_error():
+        return ErrorMessages().errorMessages['moneyError']
+
+    @staticmethod
+    def get_negative_error():
+        return ErrorMessages().errorMessages['negativeError']

@@ -8,7 +8,7 @@ from classes.ErrorMessages import ErrorMessages
 class jwtMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
-        self.views = ['register']
+        self.views = ['sell', 'buy']
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         if view_func.__name__ not in self.views:
