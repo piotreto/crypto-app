@@ -8,7 +8,7 @@ from classes.ErrorMessages import ErrorMessages
 class jwtMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
-        self.views = ['sell', 'buy']
+        self.views = ['sell', 'buy', 'wallet_details']
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         if view_func.__name__ not in self.views:
@@ -17,10 +17,10 @@ class jwtMiddleware(object):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
 
-        if 'jwt' not in body:
+        if 'JWT' not in body:
             return JsonResponse(ErrorMessages.get_jwt_error())
 
-        encoded_jwt = body['jwt']
+        encoded_jwt = body['JWT']
         try:
             payload = jwt.decode(encoded_jwt, options={"verify_signature": False}, algorithms=['HS256'])
         except jwt.exceptions.DecodeError:

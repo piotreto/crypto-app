@@ -9,30 +9,30 @@ from classes.CryptoCurrency import CryptoCurrency
 # Create your views here.
 def plot(request, *args, **kwargs):
     if request.method != 'GET':
-        return JsonResponse(ErrorMeesages.get_method_error())
+        return JsonResponse(ErrorMeesages.get_method_error(), status=400)
     
     try:
         crypto = CryptoCurrency(kwargs['id'])
         return JsonResponse(crypto.get_prices(kwargs['vs_currency'], kwargs['days'], kwargs['interval']))
     except ValueError:
-        return JsonResponse(ErrorMessages.get_crypto_id_error())
+        return JsonResponse(ErrorMessages.get_crypto_id_error(), status=400)
 
     
 
 
 def plot_no_interval(request, *args, **kwargs):
     if request.method != 'GET':
-        return JsonResponse(ErrorMeesages.get_method_error())
+        return JsonResponse(ErrorMeesages.get_method_error(), status=400)
 
     try:
         crypto = CryptoCurrency(kwargs['id'])
         return JsonResponse(crypto.get_prices(kwargs['vs_currency'], kwargs['days']))
     except ValueError:
-        return JsonResponse(ErrorMessages.get_crypto_id_error())
+        return JsonResponse(ErrorMessages.get_crypto_id_error(), status=400)
 
 def cryptoList(request, *args, **kwargs):
     if request.method != 'GET':
-        return JsonResponse(ErrorMessages.get_method_error())
+        return JsonResponse(ErrorMessages.get_method_error(), status=400)
     
     result = {
         "cryptoList": CryptoCurrency.cryptoIDs
