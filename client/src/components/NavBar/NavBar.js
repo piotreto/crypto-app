@@ -58,6 +58,13 @@ export default function NavBar(){
             <Link to='/wallet'>
                 <button className="LoginButton">Wallet</button>
             </Link>}
+
+            {user &&
+            <Link to='/trade_history'>
+                <button className="LoginButton">Trade History</button>
+            </Link>}
+
+
         </div>
     );
 }

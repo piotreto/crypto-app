@@ -1,6 +1,7 @@
 import {useState, useEffect, useCallback} from 'react';
 import axios from 'axios';
 import Transaction from '../Transaction/Transaction';
+import CryptoStats from '../CryptoStats/CryptoStats';
 
 
 export default function Wallet(){
@@ -14,6 +15,7 @@ export default function Wallet(){
       }, [])
 
     useEffect(async () =>{
+
         const URL = 'http://localhost:4200/info/wallet_details/';
         const jwt = JSON.parse(localStorage.getItem('jwt'));
         
@@ -45,6 +47,7 @@ export default function Wallet(){
                 </div>
             </div>}
             <Transaction refreshHandler = {refreshHandler}/>
+            <CryptoStats/>
         </div>
     );
 }

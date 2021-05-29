@@ -15,3 +15,11 @@ class Wallet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cryptoID = models.CharField(max_length=40)
     amount = models.FloatField(default=0)
+
+class TradeHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    cryptoID = models.CharField(max_length=40)
+    amount = models.FloatField(default=0)
+    tradeDate = models.DateTimeField()
+    tradeType = models.CharField(max_length=5)
+    currentPrice = models.FloatField(default=0)

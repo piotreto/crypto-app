@@ -2,6 +2,7 @@ import react, {useEffect, useState} from 'react';
 import Chart from '../Chart/Chart';
 import axios from 'axios';
 import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
+import CryptoStats from '../CryptoStats/CryptoStats';
 
 
 
@@ -14,6 +15,7 @@ function ChartWrapper(){
     useEffect(() =>{
         let isMounted = true;
         const cryptoListUrl = 'http://localhost:4200/exchange/list';
+
 
         axios.get(cryptoListUrl)
         .then(result => {
@@ -46,7 +48,7 @@ function ChartWrapper(){
                 </select>
                 <Chart cryptoID={cryptoChoice}/>
             </form>
-
+        
             
 
         </div>

@@ -10,6 +10,7 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import NavBar from './components/NavBar/NavBar';
 import Wallet from './components/Wallet/Wallet';
+import TradeHistory from './components/TradeHistory/TradeHistory';
 
 function App() {
   return (
@@ -34,6 +35,10 @@ function App() {
 
           <Route path='/wallet' exact={true}>
             <Wallet/>
+          </Route>
+
+          <Route path='/trade_history' exact={true}>
+            <TradeHistory/>
           </Route>
 
         </Switch>

@@ -59,6 +59,7 @@ class CryptoCurrency:
     def get_single_value(self):
         url = 'https://api.coingecko.com/api/v3/simple/price?ids=' + self.id + '&vs_currencies=usd'
         data = requests.get(url).json()
+        print(data)
 
         if "error" in data:
             return ErrorMessages.handle_CoinGecko_error(data)
@@ -121,6 +122,13 @@ class CryptoCurrency:
 
         return {'SMA_3' : SMA_3,
                 'SMA_4' : SMA_4}
+
+
+    def get_previous_day_price(self):
+        data = self.get_prices("usd", "10")
+
+        return data['prices'][-25]
+
 
 
     

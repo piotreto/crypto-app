@@ -1,6 +1,7 @@
 import './Transaction.css';
 import {useState, useEffect, useCallback} from 'react';
 import axios from 'axios';
+import TradeHistory from '../TradeHistory/TradeHistory';
 
 
 export default function Transaction(props){
