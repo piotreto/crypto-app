@@ -100,7 +100,10 @@ def sell(request, *arg, **kwargs):
 
     wallet = Wallet.objects.get(user = user, cryptoID = kwargs['id'])
     wallet.amount -= amount
-    wallet.save()
+    if (wallet.amount == 0):
+        wallet.delete()
+    else:
+        wallet.save()
 
     return JsonResponse({"error": 0})
 
@@ -166,7 +169,8 @@ def wallet_details(request, *arg, **kwargs):
     result['dollars'] = user.dollars
     result['wallet_info'] = wallet
     return JsonResponse(result)
-    
+
+#JWT MiddleWare
 def trades_history(request, *arg, **kwargs):
     if request.method != 'POST':
         return JsonResponse(ErrorMessages.get_method_error(), status=400)
@@ -191,6 +195,7 @@ def trades_history(request, *arg, **kwargs):
     result['trades'] = history
     return JsonResponse(result)
 
+#JWT middleware
 def daily_crypto_statistics(request, *arg, **kwargs):
     if request.method != 'POST':
         return JsonResponse(ErrorMessages.get_method_error(), status=400)
@@ -203,11 +208,15 @@ def daily_crypto_statistics(request, *arg, **kwargs):
 
     user = User.objects.get(email = user_email)
     wallet = Wallet.objects.filter(user = user)
+    
+    prices = CryptoCurrency.get_all_current_prices()
 
+    print(prices)
+    #list(filter(lambda x: x['id'] == obj.cryptoID, prices))[0]['current_price']
     stats_list = []
     for obj in wallet:
         crypto = CryptoCurrency(obj.cryptoID)
-        today_price = crypto.get_single_value()
+        today_price = prices[obj.cryptoID]['usd']
         yesterday_price = crypto.get_previous_day_price()
         percentage = 100 * (today_price - yesterday_price) / yesterday_price
         stats_list.append({"cryptoID": crypto.id, "percentage": percentage})
@@ -217,6 +226,7 @@ def daily_crypto_statistics(request, *arg, **kwargs):
 
     return JsonResponse(result)
 
+#JWT middleware
 def daily_statistics(request, *arg, **kwargs):
     if request.method != 'POST':
         return JsonResponse(ErrorMessages.get_method_error(), status=400)

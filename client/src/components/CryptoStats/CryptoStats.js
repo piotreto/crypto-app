@@ -1,11 +1,12 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 
-export default function CryptoStats(){
+export default function CryptoStats(props){
 
     const [stats, setStats] = useState([]);
 
     useEffect(async () => {
+        let isMounted = true;
     
         const URL = 'http://localhost:4200/info/daily_crypto_statistics/';
         const JWT = getJWT();
@@ -13,11 +14,13 @@ export default function CryptoStats(){
         
 
         const response = await axios.post(URL, JWT);
-
-        setStats(response.data.stats);
+        if(isMounted){
+            setStats(response.data.stats);
+        }
         console.log(response.data.stats);
-
-    }, []);
+        
+        return () => {isMounted = false};
+    }, [props]);
 
     const getJWT = () =>{
         const jwt = JSON.parse(localStorage.getItem('jwt'));

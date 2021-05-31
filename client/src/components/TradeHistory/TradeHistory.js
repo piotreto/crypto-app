@@ -8,6 +8,7 @@ export default function TradeHistory(){
     const [history, setHistory] = useState([]);
 
     useEffect(async () => {
+        let isMounted = true;
 
         const URL = 'http://localhost:4200/info/trade_history/';
         const JWT = getJWT();
@@ -16,12 +17,15 @@ export default function TradeHistory(){
             const response = await axios.post(URL, JWT);
 
             console.log(response.data.trades);
-            setHistory(response.data.trades);
+            if(isMounted){
+                setHistory(response.data.trades);
+            }
         }catch(err){
             alert(err);
             return;
         }
 
+        return () => {isMounted = false};
     }, []);
 
     const getJWT = () =>{

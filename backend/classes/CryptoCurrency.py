@@ -129,6 +129,14 @@ class CryptoCurrency:
 
         return data['prices'][-25]
 
+    @staticmethod
+    def get_all_current_prices():
+        resultString = '%2C'.join(CryptoCurrency.cryptoIDs) 
+        
+        url = 'https://api.coingecko.com/api/v3/simple/price?ids=' + resultString + '&vs_currencies=usd'
+        data = requests.get(url).json()
+        print(data)
+        return data
 
 
     

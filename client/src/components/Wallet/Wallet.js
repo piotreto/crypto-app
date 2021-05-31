@@ -15,6 +15,7 @@ export default function Wallet(){
       }, [])
 
     useEffect(async () =>{
+        let isMounted = true;
 
         const URL = 'http://localhost:4200/info/wallet_details/';
         const jwt = JSON.parse(localStorage.getItem('jwt'));
@@ -25,11 +26,15 @@ export default function Wallet(){
 
 
             console.log(response.data.wallet_info);
-            setWalletData(response.data);
+            if(isMounted){
+                setWalletData(response.data);
+            }
         }catch(err){
             console.log(err);
             return;
         }
+
+        return () => {isMounted = false};
     }, [tick]);
 
     return(
@@ -47,7 +52,7 @@ export default function Wallet(){
                 </div>
             </div>}
             <Transaction refreshHandler = {refreshHandler}/>
-            <CryptoStats/>
+            <CryptoStats refreshHandler = {tick}/>
         </div>
     );
 }
