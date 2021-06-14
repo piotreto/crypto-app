@@ -2,6 +2,7 @@ import {useState, useEffect, useCallback} from 'react';
 import axios from 'axios';
 import Transaction from '../Transaction/Transaction';
 import CryptoStats from '../CryptoStats/CryptoStats';
+import DailyUserStatistic from '../DailyUserStatistic/DailyUserStatistic';
 
 
 export default function Wallet(){
@@ -12,7 +13,7 @@ export default function Wallet(){
 
     const refreshHandler = useCallback(() => {
         refreshState(tick => tick + 1);
-      }, [])
+    }, [])
 
     useEffect(async () =>{
         let isMounted = true;
@@ -52,6 +53,7 @@ export default function Wallet(){
                 </div>
             </div>}
             <Transaction refreshHandler = {refreshHandler}/>
+            <DailyUserStatistic/>
             <CryptoStats refreshHandler = {tick}/>
         </div>
     );

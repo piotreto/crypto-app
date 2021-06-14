@@ -29,7 +29,7 @@ export default function CryptoStats(props){
 
     return (
         <div className="CryptoStats">
-            <h2>Last 24h</h2>
+            <h2>Statistics for cryptocurrencies for last 24h</h2>
             {stats.map((stat,i) =>{
                 return(
                 <div key={i}>

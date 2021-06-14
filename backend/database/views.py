@@ -263,10 +263,10 @@ def get_previous_day_sum(user_email):
     user = User.objects.get(email=user_email)
     wallet = Wallet.objects.filter(user = user)
     result = user.dollars
-
     for balance in wallet:
-        previous_price = get_previous_day_price(balance.cryptoID)
-        result += get_previous_day_price(balance.cryptoID) * balance.amount
+        crypto = CryptoCurrency(balance.cryptoID)
+        previous_price = crypto.get_previous_day_price()
+        result += previous_price * balance.amount
 
     return result
 
